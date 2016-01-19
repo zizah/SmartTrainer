@@ -15,13 +15,28 @@
 # limitations under the License.
 #
 import webapp2
+from model.Message import Message
 import globales
+from Admin.welcome_message import AddMessage
+from memcache.memcache_client import MemCacheClient
+from google.appengine.api import memcache
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(globales.ADD_TRAINING.render())
+        msg = memcache.get('welcome_msg')
+        if msg:
+            print "exists bingo"
+        else:
+            print "not exist"
+            welcome = Message()
+            welcome_msg = welcome.get_by_id(5838406743490560)
+            msg = str(welcome_msg.msg)
+            memcache.add(key="welcome_msg", value=str(msg), time=3600)
 
+        self.response.write(globales.index.render(msg=msg))
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/Admin/welcome_message', AddMessage)
 ], debug=True)
