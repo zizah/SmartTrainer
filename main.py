@@ -35,7 +35,7 @@ class MainHandler(webapp2.RequestHandler):
         #     memcache.add(key="welcome_msg", value=str(msg), time=3600)
         #
         # self.response.write(globales.index.render(msg=msg))
-
+        self.response.write(globales.add_training.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
