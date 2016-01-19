@@ -83,7 +83,7 @@
 
                 <div class="row">
                     <div class=" col-md-1 col-sm-1 col-xs-1 ">
-                        <button type="button" class="btn btn-success">Add an Exercice</button>
+                        <button type="button" id="btn-add-exercice" class="btn btn-success">Add an Exercice</button>
                     </div>
                     <div class=" col-md-12 col-sm-12 col-xs-12 "></div>
                 </div>
@@ -190,14 +190,32 @@
 <!-- ------------------------------------------- FOOTER ZONE END ------------------------------------------- -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="/js/jquery-1.11.1.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../js/bootstrap.min.js"></script>
-<script src="../lib/select2-3.5.1/select2.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/lib/select2-3.5.1/select2.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#e1").select2();
     });
+
+    //add an exercice
+    $("#btn-add-exercice").submit(function (event) {
+        event.preventDefault();
+        var titleDescription = $('#titleDescription').val();
+        var exerciceDescription = $('#exerciceDescription').val();
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: {
+
+            },
+            success: function (response) {
+
+            }
+        });
+    });
+
 </script>
 
 </body>

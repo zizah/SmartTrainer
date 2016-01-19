@@ -19,7 +19,8 @@ import globales
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write(globales.INDEX.render())
+        self.response.write(globales.ADD_TRAINING.render())
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
