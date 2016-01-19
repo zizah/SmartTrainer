@@ -15,10 +15,11 @@
 # limitations under the License.
 #
 import webapp2
+import globales
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.write(globales.INDEX.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
