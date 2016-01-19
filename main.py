@@ -24,17 +24,18 @@ from google.appengine.api import memcache
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        msg = memcache.get('welcome_msg')
-        if msg:
-            print "exists bingo"
-        else:
-            print "not exist"
-            welcome = Message()
-            welcome_msg = welcome.get_by_id(5838406743490560)
-            msg = str(welcome_msg.msg)
-            memcache.add(key="welcome_msg", value=str(msg), time=3600)
+        # msg = memcache.get('welcome_msg')
+        # if msg:
+        #     print "exists bingo"
+        # else:
+        #     print "not exist"
+        #     welcome = Message()
+        #     welcome_msg = welcome.get_by_id(5629499534213120)
+        #     msg = str(welcome_msg.msg)
+        #     memcache.add(key="welcome_msg", value=str(msg), time=3600)
+        #
+        # self.response.write(globales.index.render(msg=msg))
 
-        self.response.write(globales.index.render(msg=msg))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
