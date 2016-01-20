@@ -20,8 +20,8 @@
 <nav class="navbar navbar-inverse" role="navigation">
     <div class=" col-md-10 col-sm-10 col-xs-10 ">
         <form class="navbar-form navbar-left" style="width:100%" role="search">
-            <button type="submit" class="btn btn-link " style="margin:0px,padding:0px"><span
-                    class="glyphicon glyphicon-arrow-left "></span></button>
+            <a href="/" class="btn btn-link " style="margin:0px,padding:0px"><span
+                    class="glyphicon glyphicon-arrow-left "></span></a>
             <label><h5 style="color:white"> Add a Training Plan</h5></label>
         </form>
     </div>
@@ -252,11 +252,9 @@
                 url: '/Admin/add_training',
                 type: 'GET',
                 dataType: 'json',
-                data: data,
-                success: function (response) {
-                    alert(response);
-                }
+                data: data
             });
+            alert("C'est Ok !")
         }
         else {
             alert('Veuillez remplir les champs !')
