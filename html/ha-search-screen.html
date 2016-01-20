@@ -9,8 +9,6 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/js.css" rel="stylesheet">
-      
-
   </head>
   <body>
       
@@ -24,12 +22,14 @@
                 </div>
           </form>
         </div>
-          
+
         <div class=" col-md-2 col-sm-2 col-xs-2 ">
             <form class="navbar-form navbar-left"  style="width:100%" role="search">
-                <button type="submit" class="btn btn-primary">G</button>
-                <button type="submit" class="btn btn-success">Y</button>
-                <button type="submit" class="btn btn-warning">O</button>
+                {% if user %}
+                    <button type="submit" class="btn btn-primary">Bonjour</button>
+                {% else %}
+                    <button type="submit" class="btn btn-success">Se connecter</button>
+                {% endif %}
           </form>
         </div>
       </nav>
