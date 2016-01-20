@@ -7,7 +7,6 @@ class PlanEntrainement(ndb.Model):
     description = ndb.StringProperty()
     domain = ndb.StringProperty()
     duree = ndb.IntegerProperty()
-    exercice = ndb.StructuredProperty(Exercice, repeated=True)
 
 
 

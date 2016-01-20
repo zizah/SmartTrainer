@@ -19,6 +19,7 @@ import webapp2
 from model.Message import Message
 import globales
 from Admin.welcome_message import AddMessage
+from Admin.add_training import AddTraining
 from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
 
@@ -56,7 +57,8 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/Admin/welcome_message', AddMessage)
+    ('/Admin/welcome_message', AddMessage),
+    ('/Admin/add_training', AddTraining)
 ], debug=True)
 
 

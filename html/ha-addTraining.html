@@ -42,11 +42,13 @@
             <label for="inputTitle">Title</label>
         </div>
         <div class=" col-md-6 col-sm-6 col-xs-12 ">
-            <input type="email" class="form-control" id="inputTitle" placeholder="Enter your Training plan title">
+            <input type="text" class="form-control" id="inputTitle" required
+                   placeholder="Enter your Training plan title">
         </div>
         <div class=" col-md-3 col-sm-4 hidden-xs">
             <div class=" col-md-4 col-sm-4 hidden-xs">
-                <span class="glyphicon glyphicon-time"></span><p id="totalTimeValue">0</p>
+                <span class="glyphicon glyphicon-time"></span>
+                <p id="totalTimeValue">0</p>
             </div>
         </div>
     </div>
@@ -57,7 +59,7 @@
         </div>
         <div class=" col-md-6 col-sm-6 col-xs-12 ">
             <!--<input type="email" class="form-control" id="inputDescription" placeholder="Enter your Training plan Description">-->
-            <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+            <textarea id="inputDescription" class="form-control" rows="4" required></textarea>
         </div>
     </div>
     <div class="row" style="margin-top:10px">
@@ -83,7 +85,8 @@
 
                 <div class="row">
                     <div class=" col-md-1 col-sm-1 col-xs-1 ">
-                        <button type="button" id="btn-add-exercice" class="btn btn-success">Add an Exercice</button>
+                        <button type="button" id="btn-add-exercice" class="btn btn-success" required>Add an Exercice
+                        </button>
                     </div>
                     <div class=" col-md-12 col-sm-12 col-xs-12 "></div>
                 </div>
@@ -94,13 +97,13 @@
                     </div>
                     <div class=" col-md-6 col-sm-6 col-xs-12 ">
                         <input type="text" class="form-control" id="titleDescription"
-                               placeholder="Enter your exercice title">
+                               placeholder="Enter your exercice title" required>
                     </div>
                     <div class=" col-md-2 col-sm-4 col-xs-12 ">
                         <label for="repetition">Répétitions</label>
-                        <input id="repetition" type="text" class="form-control">
+                        <input id="repetition" type="number" type="text" class="form-control" value="0" required>
                         <label for="duree">Durée en minutes</label>
-                        <input id="duree" type="text" class="form-control">
+                        <input id="duree" type="number" class="form-control" value="0" required>
                     </div>
                 </div>
                 <div class="row" style="margin-top:10px">
@@ -123,9 +126,13 @@
     <div class=" col-md-1 col-sm-0 col-xs-0 "></div>
     <div class=" col-md-9 col-sm-12 col-xs-12 ">
         <table class="table table-striped table-condensed" id="all-exercices">
+            <thead>
+            <td>Répétitions</td>
+            <td>Titre</td>
+            <td>Description</td>
+            <td>Durée</td>
+            </thead>
             <tbody>
-            <tr>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -133,8 +140,10 @@
     <div class=" col-md-2 ol-sm-0 col-xs-0 "></div>
     <div class=" col-md-10 ol-sm-5 col-xs-0 "></div>
     <div class=" col-md-2 ol-sm-5 col-xs-12 text-center">
-        <button type="submit" id="cancel-training-plan" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
-        <button type="submit" id="add-training-plan" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-ok"></span></button>
+        <a type="button" href="./" id="cancel-training-plan" class="btn btn-danger btn-sm"><span
+                class="glyphicon glyphicon-remove"></span></a>
+        <button type="button" id="add-training-plan" class="btn btn-success btn-lg"><span
+                class="glyphicon glyphicon-ok"></span></button>
     </div>
 
 
@@ -172,19 +181,19 @@
         var ID = Math.random().toString(36).substr(2, 9);
 
         var tr = "<tr id='" + ID + "'>" +
-        "<td>" + repetition + "</td>" +
-        "<td>" + titleDescription + "</td>" +
-        "<td class='hidden-xs'><p>" + exerciceDescription + '</p></td>' +
-        "<td class='time-exercice'>" + duree + "</td>" +
-        "<td>" +
-        "<button type='button' onclick='deleteExercice(\""+ID+"\")' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span></button>" +
-        "</td>" +
-        "</tr>";
+                "<td>" + repetition + "</td>" +
+                "<td>" + titleDescription + "</td>" +
+                "<td class='hidden-xs'><p>" + exerciceDescription + '</p></td>' +
+                "<td class='time-exercice'>" + duree + "</td>" +
+                "<td>" +
+                "<button type='button' onclick='deleteExercice(\"" + ID + "\")' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span></button>" +
+                "</td>" +
+                "</tr>";
 
         $('#all-exercices > tbody:last-child').append(tr);
         var time = $('.time-exercice');
         totalTimeValue = 0;
-        for(i=0;i<time.size();i++) {
+        for (i = 0; i < time.size(); i++) {
             totalTimeValue += parseInt(time[i].textContent);
         }
         $('#totalTimeValue').html(totalTimeValue);
@@ -192,16 +201,60 @@
 
     //delete exercice
     function deleteExercice(id) {
-        $("#"+id).remove()
-        console.log(id)
+        $("#" + id).remove();
+        var time = $('.time-exercice');
+        totalTimeValue = 0;
+        for (i = 0; i < time.size(); i++) {
+            totalTimeValue += parseInt(time[i].textContent);
+        }
+        $('#totalTimeValue').html(totalTimeValue);
     }
 
     //add training plan
     $("#add-training-plan").click(function () {
-        var inputTitle = $('#inputTitle');
-        var inputDescription = $('#inputDescription');
-        var domain = $('#e1');
-        var duree_plan
+        var inputTitle = $('#inputTitle').val();
+        var inputDescription = $('#inputDescription').val();
+        var domain = $('#e1').val();
+        var duree_plan = parseInt($('#totalTimeValue').text());
+        var tab_exercices = $('#all-exercices');
+
+        if (inputTitle != '' && inputDescription != '' && domain != '') {
+
+            var exercices = [];
+            for (ex in tab_exercices) {
+                tmp = [];
+                $(ex).find('td').each(function () {
+                    tmp.push($(this).text());
+                });
+                exercice = {
+                    'titleDescription': tmp[1],
+                    'exerciceDescription': tmp[2],
+                    'duree': tmp[3],
+                    'repetition': tmp[0]
+                };
+                tmp = [];
+                exercices.push(exercice);
+                exercice = {};
+            }
+            data = {
+                'inputTitle': inputTitle,
+                'inputDescription': inputDescription,
+                'domain': domain,
+                'duree_plan': duree_plan,
+                'exercices': exercices
+            }
+            $.ajax({
+                url: '/Admin/add_training',
+                type: 'GET',
+                data: data,
+                success: function (response) {
+                    alert('zbreh');
+                }
+            });
+        }
+        else {
+            alert('Veuillez remplir les champs !')
+        }
     });
 
 </script>
