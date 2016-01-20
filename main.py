@@ -46,6 +46,13 @@ class MainHandler(webapp2.RequestHandler):
 
         self.response.write(globales.add_training.render())
 
+        # # Checks for active Google account session
+        # user = users.get_current_user()
+        # if user:
+        #     self.response.write(globales.add_training.render(user=user))
+        # else:
+        #    self.response.write(globales.add_training.render(user=None))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
