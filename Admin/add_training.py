@@ -5,6 +5,7 @@ from json import JSONEncoder
 
 import webapp2
 import globales
+from google.appengine.api import users
 
 from model.Exercice import Exercice
 from model.PlanEntrainement import PlanEntrainement
@@ -12,6 +13,7 @@ from model.PlanEntrainement import PlanEntrainement
 
 class AddTraining(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
         data = cgi.FieldStorage()
         inputTitle = data.getvalue('inputTitle')
         inputDescription = data.getvalue('inputDescription')
@@ -34,4 +36,4 @@ class AddTraining(webapp2.RequestHandler):
             exercice.repetition = int(ex.get('repetition'))
             exercice.put()
 
-        
+        self.response.write(globales.search.render())

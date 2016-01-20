@@ -22,45 +22,34 @@ from Admin.welcome_message import AddMessage
 from Admin.add_training import AddTraining
 from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
+from handlers.training import Training
 
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        # msg = memcache.get('welcome_msg')
-        # if msg:
-        #     print "exists bingo"
-        # else:
-        #     print "not exist"
-        #     welcome = Message()
-        #     welcome_msg = welcome.get_by_id(5629499534213120)
-        #     msg = str(welcome_msg.msg)
-        #     memcache.add(key="welcome_msg", value=str(msg), time=3600)
-        # self.response.write(globales.index.render(msg=msg))
-        # self.response.write(globales.add_training.render())
-        #
-        # # Checks for active Google account session
-        # user = users.get_current_user()
-        # if user:
-        #     self.response.write(globales.SEARCH.render(user=user))
-        # else:
-        #    self.response.write(globales.SEARCH.render(user=None))
+    # msg = memcache.get('welcome_msg')
+    # if msg:
+    #     print "exists bingo"
+    # else:
+    #     print "not exist"
+    #     welcome = Message()
+    #     welcome_msg = welcome.get_by_id(5629499534213120)
+    #     msg = str(welcome_msg.msg)
+    #     memcache.add(key="welcome_msg", value=str(msg), time=3600)
+    # self.response.write(globales.index.render(msg=msg))
+    # self.response.write(globales.add_training.render())
 
-        self.response.write(globales.add_training.render())
-
-        # # Checks for active Google account session
-        # user = users.get_current_user()
-        # if user:
-        #     self.response.write(globales.add_training.render(user=user))
-        # else:
-        #    self.response.write(globales.add_training.render(user=None))
+    # Checks for active Google account session
+        user = users.get_current_user()
+        if user:
+            self.response.write(globales.search.render(user=user))
+        else:
+            self.response.write(globales.search.render(user=None))
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/Admin/welcome_message', AddMessage),
-    ('/Admin/add_training', AddTraining)
+    ('/Admin/add_training', AddTraining),
+    ('/handlers/training', Training)
 ], debug=True)
-
-
-
-
