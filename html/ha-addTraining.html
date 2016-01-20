@@ -177,17 +177,17 @@
         "<td class='hidden-xs'><p>" + exerciceDescription + '</p></td>' +
         "<td>" + duree + " min</td>" +
         "<td>" +
-        "<button type='button' onclick='deleteExercice(" + ID + ")' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span></button>" +
+        "<button type='button' onclick='deleteExercice(\""+ID+"\")' class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-remove'></span></button>" +
         "</td>" +
         "</tr>";
 
-        $('#all-exercices > tbody:last-child').append(tr);
+        $("#all-exercices > tbody:last-child").append(tr);
     });
 
     //delete exercice
     function deleteExercice(id) {
-        var row = $('#' + id.id);
-        row.remove();
+        $("#"+id).remove()
+        console.log(id)
     }
 
 

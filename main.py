@@ -25,7 +25,7 @@ from google.appengine.api import memcache
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        msg = memcache.get('welcome_msg')
+        """msg = memcache.get('welcome_msg')
         if msg:
             print "exists bingo"
         else:
@@ -35,14 +35,14 @@ class MainHandler(webapp2.RequestHandler):
             msg = str(welcome_msg.msg)
             memcache.add(key="welcome_msg", value=str(msg), time=3600)
         self.response.write(globales.index.render(msg=msg))
-        self.response.write(globales.add_training.render())
+        self.response.write(globales.add_training.render())"""
 
         # Checks for active Google account session
         user = users.get_current_user()
         if user:
-            self.response.write(globales.SEARCH.render(user=user))
+            self.response.write(globales.add_training.render(user=user))
         else:
-           self.response.write(globales.SEARCH.render(user=None))
+           self.response.write(globales.add_training.render(user=None))
 
 
 app = webapp2.WSGIApplication([
