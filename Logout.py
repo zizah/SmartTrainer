@@ -1,5 +1,6 @@
 import webapp2
 import globales
+from memcache.memcache_client import MemCacheClient
 
 
 class Logout(webapp2.RequestHandler):

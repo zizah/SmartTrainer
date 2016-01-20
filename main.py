@@ -43,10 +43,11 @@ class MainHandler(webapp2.RequestHandler):
     # Checks for active Google account session
         user = users.get_current_user()
         if user:
-            print 'page avec user existant'
+            if(MemCacheClient.get_data('welcome_msg')):
+                # cache: key=email, value=admin/pas admin, time=10min=600s
+                MemCacheClient.add_data(key=user.email(), value=users.is_current_user_admin(), time=600)
             self.response.write(globales.search.render(user=user))
         else:
-            print 'page login dans else'
             self.redirect(users.create_login_url(self.request.uri))
 
 
