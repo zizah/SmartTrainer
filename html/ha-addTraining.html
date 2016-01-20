@@ -216,39 +216,45 @@
         var inputDescription = $('#inputDescription').val();
         var domain = $('#e1').val();
         var duree_plan = parseInt($('#totalTimeValue').text());
-        var tab_exercices = $('#all-exercices');
+        var tab_exercices = $('#all-exercices tr');
 
         if (inputTitle != '' && inputDescription != '' && domain != '') {
 
+
+
+
+
             var exercices = [];
-            for (ex in tab_exercices) {
-                tmp = [];
-                $(ex).find('td').each(function () {
-                    tmp.push($(this).text());
-                });
+            for(i=1;i<tab_exercices.size();i++){
+                var tmp = [];
+                for(j=0; j<$(tab_exercices[i]).find('td').size(); j++) {
+                    var element=$(tab_exercices[i]).find('td')[j];
+                    tmp.push($(element).text());
+                }
                 exercice = {
                     'titleDescription': tmp[1],
                     'exerciceDescription': tmp[2],
                     'duree': tmp[3],
                     'repetition': tmp[0]
                 };
-                tmp = [];
                 exercices.push(exercice);
                 exercice = {};
             }
-            data = {
+
+            var data = {
                 'inputTitle': inputTitle,
                 'inputDescription': inputDescription,
                 'domain': domain,
                 'duree_plan': duree_plan,
-                'exercices': exercices
+                'exercices': JSON.stringify(exercices)
             }
             $.ajax({
                 url: '/Admin/add_training',
                 type: 'GET',
+                dataType: 'json',
                 data: data,
                 success: function (response) {
-                    alert('zbreh');
+                    alert(response);
                 }
             });
         }

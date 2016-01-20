@@ -4,6 +4,7 @@ import pickle
 from json import JSONEncoder
 
 import webapp2
+import globales
 
 from model.Exercice import Exercice
 from model.PlanEntrainement import PlanEntrainement
@@ -16,19 +17,21 @@ class AddTraining(webapp2.RequestHandler):
         inputDescription = data.getvalue('inputDescription')
         domain = data.getvalue('domain')
         duree_plan = data.getvalue('duree_plan')
-        exercices = data.getvalue('exercices')
+        exercices = json.loads(data.getvalue('exercices'))
 
-        plan = PlanEntrainement()
-        plan.title = inputTitle
-        plan.description = inputDescription
-        plan.domain = domain
-        plan.duree = int(duree_plan)
-        plan.put()
+        plan = PlanEntrainement(
+                title=inputTitle,
+                description=inputDescription,
+                domain=domain,
+                duree=int(duree_plan))
+        e_key = plan.put()
 
         for ex in exercices:
-            exercice = Exercice(parent=plan)
-            exercice.titleDescription = ex.get('titleDescription')
-            exercice.exerciceDescription = ex.get('exerciceDescription')
+            exercice = Exercice(parent=e_key)
+            exercice.titleDescription = str(ex.get('titleDescription').encode('utf-8'))
+            exercice.exerciceDescription = str(ex.get('exerciceDescription').encode('utf-8'))
             exercice.duree = int(ex.get('duree'))
             exercice.repetition = int(ex.get('repetition'))
             exercice.put()
+
+        
