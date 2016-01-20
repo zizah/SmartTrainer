@@ -20,6 +20,7 @@ from model.Message import Message
 import globales
 from Admin.welcome_message import AddMessage
 from Admin.add_training import AddTraining
+from logout import Logout
 from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
 from handlers.training import Training
@@ -42,14 +43,17 @@ class MainHandler(webapp2.RequestHandler):
     # Checks for active Google account session
         user = users.get_current_user()
         if user:
+            print 'page avec user existant'
             self.response.write(globales.search.render(user=user))
         else:
-            self.response.write(globales.search.render(user=None))
+            print 'page login dans else'
+            self.redirect(users.create_login_url(self.request.uri))
 
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/Admin/welcome_message', AddMessage),
     ('/Admin/add_training', AddTraining),
-    ('/handlers/training', Training)
+    ('/handlers/training', Training),
+    ('/logout', Logout)
 ], debug=True)
