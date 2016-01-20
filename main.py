@@ -20,7 +20,7 @@ from model.Message import Message
 import globales
 from Admin.welcome_message import AddMessage
 from Admin.add_training import AddTraining
-from logout import Logout
+from Logout import Logout
 from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
 from handlers.training import Training
