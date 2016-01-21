@@ -23,6 +23,7 @@ from Admin.add_training import AddTraining
 from Admin.welcome_message import AddMessage
 from auth.logout import Logout
 from handlers.training import Training
+from handlers.search import Search
 from memcache.memcache_client import MemCacheClient
 from model.Message import Message
 from taskqueues.task_training import TaskTraining
@@ -35,9 +36,8 @@ class MainHandler(webapp2.RequestHandler):
              print "exists bingo"
          else:
              print "not exist"
-             welcome = Message()
-             welcome_msg = welcome.get_by_id(5629499534213120)
-             msg = str(welcome_msg.msg)
+             welcome_msg = Message.getByIdMessage("welcome_message")
+             msg = welcome_msg[0].msg
              memcache.add(key="welcome_msg", value=str(msg), time=3600)
          user = users.get_current_user()
          if user:
@@ -45,14 +45,12 @@ class MainHandler(webapp2.RequestHandler):
          else:
              self.response.write(globales.index.render(msg=msg, user=None))
 
-
-
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/Admin/welcome_message', AddMessage),
     ('/Admin/add_training', AddTraining),
     ('/handlers/training', Training),
+    ('/handlers/search', Search),
     ('/taskqueues/task_training', TaskTraining),
     ('/auth/logout', Logout)
 ], debug=True)

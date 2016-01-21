@@ -10,7 +10,7 @@ class PlanEntrainement(ndb.Model):
 
     @staticmethod
     def get_all_domain_by_user(user):
-        res = PlanEntrainement.query(user=user).order(PlanEntrainement.domain).fetch()
+        res = PlanEntrainement.query(PlanEntrainement.user == user).order(PlanEntrainement.domain).fetch()
         if not res:
             return []
         else:

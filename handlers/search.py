@@ -9,11 +9,11 @@ from google.appengine.api import users
 from model.PlanEntrainement import PlanEntrainement
 
 
-class search(webapp2.RequestHandler):
+class Search(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
             domains = PlanEntrainement.get_all_domain_by_user(str(user.email()))
-            self.response.write(globales.add_training.render(user=user, domains=domains))
+            self.response.write(globales.search.render(user=user, domains=domains))
         else:
             self.response.write(globales.search.render(user=None))

@@ -7,6 +7,7 @@ class AddMessage(webapp2.RequestHandler):
         msg = cgi.escape(self.request.get('message_content'))
 
         message = Message()
+        message.id_message = "welcome_message"
         message.msg = msg
-        message.insert_msg()
+        message.put()
 
