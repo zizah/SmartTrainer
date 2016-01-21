@@ -30,6 +30,9 @@ handlers:
 - url: .*
   script: main.app
 
+- url: /auth/logout
+  script: main.app
+
 libraries:
 - name: webapp2
   version: "2.5.2"
