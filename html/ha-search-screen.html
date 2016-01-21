@@ -87,14 +87,17 @@
       
       
       <!-- ------------------------------------------- FOOTER ZONE ------------------------------------------- -->
-      <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-        <div class=" col-md-10 col-sm-10 col-xs-10 ">
-            <form class="navbar-form navbar-left"  style="width:100%" role="search">
-               <a type="button"  href="/handlers/training" type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-plus-sign"></span> </a>
-               <label style="color:white">Add a Training Plan</label>
-          </form>
-        </div>
-      </nav>
+      {% if user %}
+        <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+            <div class=" col-md-10 col-sm-10 col-xs-10 ">
+                <form class="navbar-form navbar-left"  style="width:100%" role="search">
+                   <a type="button"  href="/handlers/training" type="submit" class="btn btn-danger"> <span class="glyphicon glyphicon-plus-sign"></span> </a>
+                   <label style="color:white">Add a Training Plan</label>
+              </form>
+            </div>
+        </nav>
+      {% endif %}
+
       <!-- ------------------------------------------- FOOTER ZONE END ------------------------------------------- -->
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
