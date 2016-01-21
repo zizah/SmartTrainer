@@ -5,10 +5,6 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
-
 - url: /js
   static_dir: js
 
@@ -29,6 +25,21 @@ handlers:
 
 - url: .*
   script: main.app
+
+- url: /admin/.*
+  script: main.app
+  login: required
+  auth_fail_action: unauthorized
+
+- url: /taskqueues/.*
+  script: main.app
+  login: admin
+  auth_fail_action: unauthorized
+
+- url: /Admin/.*
+  script: main.app
+  login: required
+  auth_fail_action: unauthorized
 
 - url: /auth/logout
   script: main.app

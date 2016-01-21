@@ -14,16 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from google.appengine.api import users
 import webapp2
-from model.Message import Message
-import globales
-from Admin.welcome_message import AddMessage
-from Admin.add_training import AddTraining
-from Logout import Logout
-from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
+from google.appengine.api import users
+
+import globales
+from Admin.add_training import AddTraining
+from Admin.welcome_message import AddMessage
+from auth.logout import Logout
 from handlers.training import Training
+from memcache.memcache_client import MemCacheClient
+from model.Message import Message
 from taskqueues.task_training import TaskTraining
 
 
@@ -44,13 +45,11 @@ class MainHandler(webapp2.RequestHandler):
          # Checks for active Google account session
          user = users.get_current_user()
          if user:
-            if(MemCacheClient.get_data('welcome_msg')):
-                # Add a value if it doesn't exist in the cache, with cache: key=email, value=admin/pas admin, time=10min=600s
-                MemCacheClient.add_data(key=user.email(), value=users.is_current_user_admin(), time=600)
-            self.response.write(globales.search.render(user=user))
+            logout_url = users.create_logout_url('/')
+            self.response.write(globales.search.render(user=user, url=logout_url))
          else:
-             self.response.write(globales.search.render(user=None))
-             #self.redirect(users.create_login_url(self.request.uri))
+             login_url = users.create_login_url('/')
+             self.response.write(globales.search.render(user=None, url=login_url))
 
 
 app = webapp2.WSGIApplication([
@@ -59,5 +58,5 @@ app = webapp2.WSGIApplication([
     ('/Admin/add_training', AddTraining),
     ('/handlers/training', Training),
     ('/taskqueues/task_training', TaskTraining),
-    ('/logout', Logout)
+    ('/auth/logout', Logout)
 ], debug=True)
