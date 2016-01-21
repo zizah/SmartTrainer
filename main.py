@@ -37,19 +37,15 @@ class MainHandler(webapp2.RequestHandler):
              print "not exist"
              welcome = Message()
              welcome_msg = welcome.get_by_id(5629499534213120)
-             #msg = str(welcome_msg.msg)
-             #memcache.add(key="welcome_msg", value=str(msg), time=3600)
-         #self.response.write(globales.index.render(msg=msg, user=user))
-         #self.response.write(globales.add_training.render(user=user))
-
-         # Checks for active Google account session
+             msg = str(welcome_msg.msg)
+             memcache.add(key="welcome_msg", value=str(msg), time=3600)
          user = users.get_current_user()
          if user:
-            logout_url = users.create_logout_url('/')
-            self.response.write(globales.search.render(user=user, url=logout_url))
+            self.response.write(globales.index.render(msg=msg, user=user))
          else:
-             login_url = users.create_login_url('/')
-             self.response.write(globales.search.render(user=None, url=login_url))
+             self.response.write(globales.index.render(msg=msg, user=None))
+
+
 
 
 app = webapp2.WSGIApplication([

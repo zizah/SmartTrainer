@@ -3,6 +3,7 @@ import webapp2
 import json
 from model.Exercice import Exercice
 from model.PlanEntrainement import PlanEntrainement
+from google.appengine.api import users
 
 
 class TaskTraining(webapp2.RequestHandler):
@@ -16,6 +17,7 @@ class TaskTraining(webapp2.RequestHandler):
         exercices = json.loads(str_exercices)
 
         plan = PlanEntrainement(
+                user=str(users.get_current_user().email()),
                 title=inputTitle,
                 description=inputDescription,
                 domain=domain,
