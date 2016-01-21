@@ -24,11 +24,12 @@
         </div>
 
         <div class=" col-md-2 col-sm-2 col-xs-2 ">
-            <form action="/logout" method="post" class="navbar-form navbar-left"  style="width:100%" role="search">
+            <form class="navbar-form navbar-left"  style="width:100%" role="search">
                 {% if user %}
-                    <button type="submit" class="btn btn-primary">Bonjour {{ user.nickname()}}</button>
+                    <span style="color: white">{{ user.nickname() }} {{ user.email() }}</span>
+                    <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-stats"></span></button>
                 {% else %}
-                    <button type="submit" class="btn btn-success">Se connecter</button>
+                    <a type="button"  href="_ah/login?continue=http%3A//127.0.0.1%3A8080/" type="submit" class="btn btn-success">Se connecter</a>
                 {% endif %}
             </form>
         </div>

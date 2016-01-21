@@ -29,27 +29,28 @@ from taskqueues.task_training import TaskTraining
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-    # msg = memcache.get('welcome_msg')
-    # if msg:
-    #     print "exists bingo"
-    # else:
-    #     print "not exist"
-    #     welcome = Message()
-    #     welcome_msg = welcome.get_by_id(5629499534213120)
-    #     msg = str(welcome_msg.msg)
-    #     memcache.add(key="welcome_msg", value=str(msg), time=3600)
-    # self.response.write(globales.index.render(msg=msg))
-    # self.response.write(globales.add_training.render())
+         msg = memcache.get('welcome_msg')
+         if msg:
+             print "exists bingo"
+         else:
+             print "not exist"
+             welcome = Message()
+             welcome_msg = welcome.get_by_id(5629499534213120)
+             #msg = str(welcome_msg.msg)
+             #memcache.add(key="welcome_msg", value=str(msg), time=3600)
+         #self.response.write(globales.index.render(msg=msg, user=user))
+         #self.response.write(globales.add_training.render(user=user))
 
-    # Checks for active Google account session
-        user = users.get_current_user()
-        if user:
+         # Checks for active Google account session
+         user = users.get_current_user()
+         if user:
             if(MemCacheClient.get_data('welcome_msg')):
-                # cache: key=email, value=admin/pas admin, time=10min=600s
+                # Add a value if it doesn't exist in the cache, with cache: key=email, value=admin/pas admin, time=10min=600s
                 MemCacheClient.add_data(key=user.email(), value=users.is_current_user_admin(), time=600)
             self.response.write(globales.search.render(user=user))
-        else:
-            self.redirect(users.create_login_url(self.request.uri))
+         else:
+             self.response.write(globales.search.render(user=None))
+             #self.redirect(users.create_login_url(self.request.uri))
 
 
 app = webapp2.WSGIApplication([
