@@ -23,6 +23,7 @@ from Admin.add_training import AddTraining
 from memcache.memcache_client import MemCacheClient
 from google.appengine.api import memcache
 from handlers.training import Training
+from taskqueues.task_training import TaskTraining
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -51,5 +52,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/Admin/welcome_message', AddMessage),
     ('/Admin/add_training', AddTraining),
-    ('/handlers/training', Training)
+    ('/handlers/training', Training),
+    ('/taskqueues/task_training', TaskTraining)
 ], debug=True)

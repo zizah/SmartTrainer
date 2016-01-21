@@ -20,7 +20,7 @@
 <nav class="navbar navbar-inverse" role="navigation">
     <div class=" col-md-10 col-sm-10 col-xs-10 ">
         <form class="navbar-form navbar-left" style="width:100%" role="search">
-            <a href="/" class="btn btn-link " style="margin:0px,padding:0px"><span
+            <a href="/" class="btn btn-link " style="margin:0px;padding:0px"><span
                     class="glyphicon glyphicon-arrow-left "></span></a>
             <label><h5 style="color:white"> Add a Training Plan</h5></label>
         </form>
@@ -219,45 +219,47 @@
         var tab_exercices = $('#all-exercices tr');
 
         if (inputTitle != '' && inputDescription != '' && domain != '') {
+            if (tab_exercices.size() > 1) {
 
 
-
-
-
-            var exercices = [];
-            for(i=1;i<tab_exercices.size();i++){
-                var tmp = [];
-                for(j=0; j<$(tab_exercices[i]).find('td').size(); j++) {
-                    var element=$(tab_exercices[i]).find('td')[j];
-                    tmp.push($(element).text());
+                var exercices = [];
+                for (i = 1; i < tab_exercices.size(); i++) {
+                    var tmp = [];
+                    for (j = 0; j < $(tab_exercices[i]).find('td').size(); j++) {
+                        var element = $(tab_exercices[i]).find('td')[j];
+                        tmp.push($(element).text());
+                    }
+                    exercice = {
+                        'titleDescription': tmp[1],
+                        'exerciceDescription': tmp[2],
+                        'duree': tmp[3],
+                        'repetition': tmp[0]
+                    };
+                    exercices.push(exercice);
+                    exercice = {};
                 }
-                exercice = {
-                    'titleDescription': tmp[1],
-                    'exerciceDescription': tmp[2],
-                    'duree': tmp[3],
-                    'repetition': tmp[0]
-                };
-                exercices.push(exercice);
-                exercice = {};
-            }
 
-            var data = {
-                'inputTitle': inputTitle,
-                'inputDescription': inputDescription,
-                'domain': domain,
-                'duree_plan': duree_plan,
-                'exercices': JSON.stringify(exercices)
+                var data = {
+                    'inputTitle': inputTitle,
+                    'inputDescription': inputDescription,
+                    'domain': domain,
+                    'duree_plan': duree_plan,
+                    'exercices': JSON.stringify(exercices)
+                };
+                $.ajax({
+                    url: '/Admin/add_training',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: data
+                });
+                alert("C'est Ok !");
             }
-            $.ajax({
-                url: '/Admin/add_training',
-                type: 'GET',
-                dataType: 'json',
-                data: data
-            });
-            alert("C'est Ok !")
+            else {
+                alert('Veuillez ajouter au moins un exercice !');
+            }
         }
         else {
-            alert('Veuillez remplir les champs !')
+            alert('Veuillez remplir les champs !');
         }
     });
 
