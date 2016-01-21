@@ -3,9 +3,10 @@ from google.appengine.api import users
 
 import globales
 from model.PlanEntrainement import PlanEntrainement
+from model.Exercice import Exercice
 
 
-class Search(webapp2.RequestHandler):
+class Details(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:

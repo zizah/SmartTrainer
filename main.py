@@ -24,6 +24,7 @@ from Admin.welcome_message import AddMessage
 from auth.logout import Logout
 from handlers.training import Training
 from handlers.search import Search
+from handlers.details_screen import Details
 from memcache.memcache_client import MemCacheClient
 from model.Message import Message
 from taskqueues.task_training import TaskTraining
@@ -51,6 +52,7 @@ app = webapp2.WSGIApplication([
     ('/Admin/add_training', AddTraining),
     ('/handlers/training', Training),
     ('/handlers/search', Search),
+    ('handlers/details_screen', Details),
     ('/taskqueues/task_training', TaskTraining),
     ('/auth/logout', Logout)
 ], debug=True)
