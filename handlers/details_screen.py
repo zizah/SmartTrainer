@@ -9,10 +9,7 @@ from model.Exercice import Exercice
 
 class Details(webapp2.RequestHandler):
     def get(self):
-        # data = cgi.FieldStorage().getvalue('data')
-        data = {
-            'id': 5838406743490560
-        }
+        data = cgi.FieldStorage().getvalue('data')
         user = users.get_current_user()
         if user:
             url = users.create_logout_url('/')
