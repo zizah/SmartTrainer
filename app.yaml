@@ -14,17 +14,11 @@ handlers:
 - url: /html
   script: html
 
-- url: /css
-  static_dir: css
-
 - url: /fonts
   static_dir: fonts
 
 - url: /css
   static_dir: css
-
-- url: .*
-  script: main.app
 
 - url: /admin/.*
   script: main.app
@@ -42,6 +36,9 @@ handlers:
   auth_fail_action: unauthorized
 
 - url: /auth/logout
+  script: main.app
+
+- url: .*
   script: main.app
 
 libraries:

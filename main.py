@@ -21,13 +21,14 @@ from google.appengine.api import users
 import globales
 from Admin.add_training import AddTraining
 from Admin.welcome_message import AddMessage
+from Admin.add_recap import AddRecap
 from auth.logout import Logout
-from handlers.training import Training
-from handlers.search import Search
 from handlers.details_screen import Details
-from memcache.memcache_client import MemCacheClient
+from handlers.search import Search
+from handlers.training import Training
 from model.Message import Message
 from taskqueues.task_training import TaskTraining
+from taskqueues.task_recap import TaskRecap
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -38,8 +39,9 @@ class MainHandler(webapp2.RequestHandler):
          else:
              print "not exist"
              welcome_msg = Message.getByIdMessage("welcome_message")
-             msg = welcome_msg[0].msg
-             memcache.add(key="welcome_msg", value=str(msg), time=3600)
+             if welcome_msg:
+                msg = welcome_msg[0].msg
+                memcache.add(key="welcome_msg", value=str(msg), time=3600)
          user = users.get_current_user()
          if user:
             self.response.write(globales.index.render(msg=msg, user=user))
@@ -48,11 +50,13 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/Admin/welcome_message', AddMessage),
-    ('/Admin/add_training', AddTraining),
-    ('/handlers/training', Training),
-    ('/handlers/search', Search),
-    ('handlers/details_screen', Details),
-    ('/taskqueues/task_training', TaskTraining),
+    ('/Admin/welcome_message.*', AddMessage),
+    ('/Admin/add_training.*', AddTraining),
+    ('/Admin/add_recap.*', AddRecap),
+    ('/handlers/training.*', Training),
+    ('/handlers/search.*', Search),
+    ('/handlers/details_screen.*', Details),
+    ('/taskqueues/task_training.*', TaskTraining),
+    ('/taskqueues/task_recap.*', TaskRecap),
     ('/auth/logout', Logout)
 ], debug=True)

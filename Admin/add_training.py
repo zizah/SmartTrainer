@@ -23,7 +23,8 @@ class AddTraining(webapp2.RequestHandler):
                 'inputDescription': inputDescription,
                 'domain': domain,
                 'duree_plan': duree_plan,
-                'exercices': exercices
+                'exercices': exercices,
+                'user': user.email()
             }
 
             taskqueue.add(url='/taskqueues/task_training', params=params)
