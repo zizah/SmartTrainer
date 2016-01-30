@@ -46,6 +46,7 @@ class MainHandler(webapp2.RequestHandler):
          if user:
             self.response.write(globales.index.render(msg=msg, user=user))
          else:
+             #self.redirect(users.create_login_url(self.request.uri))
              self.response.write(globales.index.render(msg=msg, user=None))
 
 app = webapp2.WSGIApplication([

@@ -19,7 +19,7 @@ class Details(webapp2.RequestHandler):
                 exercices = Exercice.get_exercices_from_ancestor(plan)
                 self.response.write(globales.result_detail.render(user=user, url=url, plan=plan.title,exercices=exercices))
             else:
-                self.response.write(globales.search.render(user=None, url=url))
+                self.response.write(globales.search.render(user=user, url=url))
         else:
             url = users.create_login_url('/')
             self.response.write(globales.search.render(user=None, url=url))
